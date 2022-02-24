@@ -19,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -29,10 +28,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import screens.DevelopmentStage;
 
 public class PArt extends Application {
 	//Attributes
-		Boolean devStageOpen = false;
 		Boolean mousePresent = false;
 		Boolean mousePressed = false;
 	
@@ -46,9 +45,9 @@ public class PArt extends Application {
 				String mainStageTitle = "P-art";
 				String mainStageIconImage = "peterHead.PNG";
 				
-			//Monitor Variables
-				TextArea tracker = new TextArea();
-				
+			//Monitor Objects
+				DevelopmentStage devStage = new DevelopmentStage(mainStage);
+							
 			//Adding
 				mainStage.setScene(getMainScene());
 				
@@ -56,16 +55,16 @@ public class PArt extends Application {
 				//Main Stage
 					mainStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 						public void handle(KeyEvent e) {
-							if(devStageOpen == false)
+							if(devStage.isOpen() == false)
 								if(e.getCode() == KeyCode.BACK_QUOTE)
-									devStage(mainStage, tracker);
+									devStage.open();
 						}
 					});
 					
 					mainStage.addEventHandler(Event.ANY, new EventHandler<Event>() {
 						public void handle(Event e) {
-							if(devStageOpen == true) {
-								tracker.setText("Mouse Present: " + mousePresent + "\nMouse Pressed: " + mousePressed);
+							if(devStage.isOpen() == true) {
+								devStage.setTracker("Mouse Present: " + mousePresent + "\nMouse Pressed: " + mousePressed);
 							}
 						}
 					});
@@ -205,60 +204,6 @@ public class PArt extends Application {
 						
 						
 			return mainScene;
-		}
-		
-	//Development Stage
-		private void devStage(Stage parentStage, TextArea tracker) {		
-			//Limit Variables
-				Boolean[] triggered = {false}; 
-			
-			//Instantiating Components 
-				Stage devStage = new Stage();
-				Scene mainScene = new Scene(new Pane(tracker));
-				
-			//Instantiating Events
-				EventHandler<KeyEvent> parentClosesDev = new EventHandler<KeyEvent>() {
-					public void handle(KeyEvent e) {
-						if(e.getCode() == KeyCode.BACK_QUOTE && triggered[0] == true)
-							devStage.fireEvent(new WindowEvent(devStage, WindowEvent.WINDOW_CLOSE_REQUEST));
-						else
-							triggered[0] = true;
-					}
-				};
-				
-			//Setting
-				//Appearance
-					//Development Stage
-						devStage.setTitle("Development Window");
-				
-		 			//Tracker
-						tracker.setPrefSize(300, 50);
-		 				tracker.setEditable(false);
-		 				
-				//Events
-					//Development Stage
-		 				devStage.setOnShown(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent e) {
-								parentStage.addEventHandler(KeyEvent.KEY_PRESSED, parentClosesDev);
-								devStageOpen = true;
-							}
-						});
-		 				
-		 				devStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent e) {
-								devStageOpen = false;
-								parentStage.removeEventHandler(KeyEvent.KEY_PRESSED, parentClosesDev);
-								devStage.close();
-							}
-						});
-		 				
-		 			//Parent Stage
-						
-						
-						
-			//Presenting
-				devStage.setScene(mainScene);
-				devStage.show();
 		}
 	
 	//Utility Methods
