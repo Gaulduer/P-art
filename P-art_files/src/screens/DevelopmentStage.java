@@ -1,12 +1,5 @@
 package screens;
 
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-
 /*
  * Peter Gauld
  * Development Stage - A Development Stage for showing certain variables. Meant to help during development.
@@ -14,6 +7,14 @@ import javafx.scene.layout.Pane;
  * 2/23/2022 - File Created.
  * 2/24/2022 - Development Stage successfully transfered from PArt. Converted from method to class.
  */
+
+
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -71,7 +72,6 @@ public class DevelopmentStage extends Stage{
 							devStage.close();
 						}
 					});
-					
 					
 			//Presenting
 				devStage.setScene(mainScene);

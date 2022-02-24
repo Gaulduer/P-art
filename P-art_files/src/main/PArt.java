@@ -12,6 +12,7 @@ package main;
 
 import fxAppeareance.Designer;
 import fxFiles.FxResourceHandler;
+import fxObjects.Canvas;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,7 +22,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -31,9 +31,7 @@ import javafx.stage.WindowEvent;
 import screens.DevelopmentStage;
 
 public class PArt extends Application {
-	//Attributes
-		Boolean mousePresent = false;
-		Boolean mousePressed = false;
+	private Canvas canvas = new Canvas();
 	
 	public static void main(String[] args) {
 		launch();
@@ -64,7 +62,7 @@ public class PArt extends Application {
 					mainStage.addEventHandler(Event.ANY, new EventHandler<Event>() {
 						public void handle(Event e) {
 							if(devStage.isOpen() == true) {
-								devStage.setTracker("Mouse Present: " + mousePresent + "\nMouse Pressed: " + mousePressed);
+								devStage.setTracker("Mouse Present: " + canvas.isMousePresent() + "\nMouse Pressed: " + canvas.isMousePressed());
 							}
 						}
 					});
@@ -85,7 +83,6 @@ public class PArt extends Application {
 		public Scene getMainScene() {
 			//Control Variables
 				Color toolPaneColor = Color.rgb(20, 20, 20);
-				Color canvasPaneColor = Color.rgb(255, 255, 255);
 				Color topBarColor = Color.rgb(50, 50, 50);
 				Color menuTextColor = Color.rgb(255, 255, 255);
 				
@@ -154,18 +151,16 @@ public class PArt extends Application {
 					//Main Pane
 						mainPane.setPrefSize(800, 600);
 						mainPane.minWidthProperty().bind(mainScene.widthProperty());
-						mainPane.minHeightProperty().bind(mainScene.heightProperty());
-						canvasPane.setBackground(Designer.getBackground(new Color(0, 0, 0, 1)));
-								
-						//Canvas Pane
-							canvasPane.setBackground(Designer.getBackground(canvasPaneColor));
-							canvasPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(3).divide(4));
-							canvasPane.prefHeightProperty().bind(mainPane.heightProperty());
+						mainPane.minHeightProperty().bind(mainScene.heightProperty());								
 						
 						//Tool Pane
 							toolPane.setBackground(Designer.getBackground(toolPaneColor));
 							toolPane.prefWidthProperty().bind(mainPane.widthProperty().divide(4));
 							toolPane.prefHeightProperty().bind(mainPane.heightProperty());
+							
+						//Canvas Pane
+							canvasPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(3).divide(4));
+							canvasPane.prefHeightProperty().bind(mainPane.heightProperty());
 							
 					//Top Bar Menu Bar
 						topBar.setBackground(Designer.getBackground(topBarColor));
@@ -175,33 +170,6 @@ public class PArt extends Application {
 							canvas.setGraphic(Designer.getText("Canvas", menuTextColor));
 							docker.setGraphic(Designer.getText("Dockers", menuTextColor));
 							help.setGraphic(Designer.getText("Help", menuTextColor));
-							
-				//Events
-					//Canvas Pane
-						canvasPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								mousePresent = true;
-							}
-						});
-								
-						canvasPane.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								mousePresent = false;
-							}
-						});
-						
-						canvasPane.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								mousePressed = true;
-							}
-						});
-						
-						canvasPane.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								mousePressed = false;
-							}
-						});
-						
 						
 			return mainScene;
 		}
