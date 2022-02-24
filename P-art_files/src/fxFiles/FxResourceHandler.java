@@ -14,7 +14,7 @@ public class FxResourceHandler {
 	public static void addStageIcon(Stage iconify, String icon) {
 		//This method is to use a try catch for error handling the in case image is not available.
 		try {
-			iconify.getIcons().add(new Image("file:resources/" + icon));
+			iconify.getIcons().add(new Image("resources/" + icon));
 		}
 		catch(Exception e) {
 			System.out.println("Error Retrieving Image: " + icon);
