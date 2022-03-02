@@ -12,7 +12,7 @@ package main;
 
 import fxAppeareance.Designer;
 import fxFiles.FxResourceHandler;
-import fxObjects.Canvas;
+import fxObjects.PCanvas;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -31,7 +31,7 @@ import javafx.stage.WindowEvent;
 import screens.DevelopmentStage;
 
 public class PArt extends Application {
-	private Canvas canvas = new Canvas();
+	private PCanvas canvas = new PCanvas();
 	
 	public static void main(String[] args) {
 		launch();
@@ -43,9 +43,12 @@ public class PArt extends Application {
 				String mainStageTitle = "P-art";
 				String mainStageIconImage = "peterHead.PNG";
 				
+			//Function Objects
+				//DrawingScreen draw = new DrawingScreen();
+				
 			//Monitor Objects
 				DevelopmentStage devStage = new DevelopmentStage(mainStage);
-							
+				
 			//Adding
 				mainStage.setScene(getMainScene());
 				
@@ -53,9 +56,12 @@ public class PArt extends Application {
 				//Main Stage
 					mainStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 						public void handle(KeyEvent e) {
-							if(devStage.isOpen() == false)
-								if(e.getCode() == KeyCode.BACK_QUOTE)
+							if(e.getCode() == KeyCode.BACK_QUOTE)
+								if(devStage.isOpen() == false)
 									devStage.open();
+							if(e.getCode() == KeyCode.C) {
+								canvas.clear();
+							}
 						}
 					});
 					
@@ -91,38 +97,36 @@ public class PArt extends Application {
 				//Components for Main Scene
 					MenuBar topBar = new MenuBar();
 					//Top Bar Menus
-						Menu file = new Menu();
+						Menu fileMenu = new Menu();
 						//File Menu Items
 							MenuItem fileNew = new MenuItem("New");
 							MenuItem fileOpen = new MenuItem("Open");
 							MenuItem fileSave = new MenuItem("Save");
 							MenuItem fileSaveAs = new MenuItem("Save as");
 							MenuItem[] fileMenuItems = {fileNew, fileOpen, fileSave, fileSaveAs};
-						Menu canvas = new Menu();
+						Menu canvasMenu = new Menu();
 						//Canvas Menu items
 							MenuItem canvasSize = new MenuItem("Change Canvas Size");
 							MenuItem canvasBackground = new MenuItem("Set Background Layer");
 							MenuItem[] canvasMenuItems = {canvasSize, canvasBackground};
-						Menu docker = new Menu();
+						Menu dockerMenu = new Menu();
 						//Docker Menu Items
 							MenuItem dockerBrush = new MenuItem("Brush Docker");
 							MenuItem dockerColor = new MenuItem("Color Docker");
 							MenuItem dockerLayer = new MenuItem("Layer Docker");
 							MenuItem dockerTimeline = new MenuItem("Timeline Docker");
 							MenuItem[] dockerMenuItems = {dockerBrush, dockerColor, dockerLayer, dockerTimeline};
-						Menu help = new Menu();
+						Menu helpMenu = new Menu();
 						//Help Menu Items
 							MenuItem helpTools = new MenuItem("Tools?");
 							MenuItem helpCanvas = new MenuItem("Canvas?");
 							MenuItem helpDockers = new MenuItem("Dockers?");
 							MenuItem[] helpMenuItems = {helpTools, helpCanvas, helpDockers};
-							Menu[] topBarMenus = {file, canvas, docker, help};
+							Menu[] topBarMenus = {fileMenu, canvasMenu, dockerMenu, helpMenu};
 					Pane mainPane = new Pane();
 					//Components for Main Pane
 						Pane toolPane = new Pane();
 						Pane canvasPane = new Pane();
-						
-							
 			
 			//Adding to 
 				//Main Scene.
@@ -130,21 +134,27 @@ public class PArt extends Application {
 					
 					//Main Pane
 						mainPane.getChildren().add(new HBox(toolPane, canvasPane));
-					
+						
+						//Canvas Pane
+							canvasPane.getChildren().add(canvas);
+							canvas.setParentPane(canvasPane);
+							canvas.setStrokeWidth(20);
+							canvas.setStrokeColor(Designer.getColor(0, 50, 100));
+						
 					//Top Bar Menu Bar
 						topBar.getMenus().addAll(topBarMenus);
 						
 						//File Menu
-							file.getItems().addAll(fileMenuItems);
+							fileMenu.getItems().addAll(fileMenuItems);
 							
 						//Canvas Menu
-							canvas.getItems().addAll(canvasMenuItems);
+							canvasMenu.getItems().addAll(canvasMenuItems);
 							
 						//Docker Menu
-							docker.getItems().addAll(dockerMenuItems);
+							dockerMenu.getItems().addAll(dockerMenuItems);
 							
 						//Help Menu
-							help.getItems().addAll(helpMenuItems);
+							helpMenu.getItems().addAll(helpMenuItems);
 							
 			//Setting 
 				//Appearance
@@ -166,10 +176,10 @@ public class PArt extends Application {
 						topBar.setBackground(Designer.getBackground(topBarColor));
 						
 						//Menus for Bar Menu Bar	
-							file.setGraphic(Designer.getText("File", menuTextColor));
-							canvas.setGraphic(Designer.getText("Canvas", menuTextColor));
-							docker.setGraphic(Designer.getText("Dockers", menuTextColor));
-							help.setGraphic(Designer.getText("Help", menuTextColor));
+							fileMenu.setGraphic(Designer.getText("File", menuTextColor));
+							canvasMenu.setGraphic(Designer.getText("Canvas", menuTextColor));
+							dockerMenu.setGraphic(Designer.getText("Dockers", menuTextColor));
+							helpMenu.setGraphic(Designer.getText("Help", menuTextColor));
 						
 			return mainScene;
 		}
