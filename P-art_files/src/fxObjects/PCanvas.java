@@ -6,7 +6,9 @@ package fxObjects;
  * 
  * 2/25/2022 - File Created.
  */
-																																																																																																																																																																																																																																																																																																																																																																																			
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -100,9 +102,26 @@ public class PCanvas extends Canvas {
 		}
 	
 	public void setParentPane(Pane parentPane) {
+		/*
+		this.parentPane = parentPane;
+		parentPane.visibleProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> v, Boolean o, Boolean n) {
+				System.out.println(o);
+				System.out.println(n);
+			}		
+		});
+		
+		parentPane.setVisible(false);
+		*/
 		this.parentPane = parentPane;
 		this.widthProperty().bind(parentPane.widthProperty());
 		this.heightProperty().bind(parentPane.heightProperty());
+		parentPane.widthProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> v, Number o, Number n) {	
+				System.out.println(o);
+				System.out.println(n);
+			}
+		});
 	}
 	
 	public Pane getParentPane() {
