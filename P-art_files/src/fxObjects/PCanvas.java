@@ -118,8 +118,7 @@ public class PCanvas extends Canvas {
 		this.heightProperty().bind(parentPane.heightProperty());
 		parentPane.widthProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> v, Number o, Number n) {	
-				System.out.println(o);
-				System.out.println(n);
+
 			}
 		});
 	}

@@ -3,10 +3,10 @@ package fxObjects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 
-public class ToolBrush {
+public class ToolBrush extends Tool{
 	//Attributes
 		private int strokeWidth;
-		private Brush brush = new BrushMarker();
+		private Brush brush = new BrushStroke();
 		private GraphicsContext g;
 	
 	//Constructors

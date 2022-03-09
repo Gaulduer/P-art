@@ -57,7 +57,7 @@ public class PArt extends Application {
 					mainStage.addEventHandler(Event.ANY, new EventHandler<Event>() {
 						public void handle(Event e) {
 							if(devStage.isOpen() == true) {
-								devStage.setTracker("Mouse Present: " + draw.getCanvas().isMousePresent() + "\nMouse Pressed: " + draw.getCanvas().isMousePressed());
+								devStage.setTracker("Mouse Present: " + draw.getCanvas().isMousePresent() + "\nMouse Pressed: " + draw.getCanvas().isMousePressed() + "\nTool Selected: " + draw.getToolName());
 							}
 						}
 					});

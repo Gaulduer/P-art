@@ -14,9 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class DevelopmentStage extends Stage{
@@ -35,7 +37,9 @@ public class DevelopmentStage extends Stage{
 		
 		//Instantiating Components 
 			Stage devStage = new Stage();
-			Scene mainScene = new Scene(new Pane(tracker));
+			//Scene mainScene = new Scene(new Pane(tracker));
+			Pane testingPane = new Pane();
+			Scene mainScene = new Scene(new VBox(tracker, testingPane));
 			
 		//Instantiating Events
 			EventHandler<KeyEvent> parentClosesDev = new EventHandler<KeyEvent>() {
@@ -72,6 +76,17 @@ public class DevelopmentStage extends Stage{
 							devStage.close();
 						}
 					});
+	 				
+	 		//All things for testing pane
+	 			testingPane.setPrefSize(200, 100);
+	 			
+	 			testingPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent e) {
+						Stage display = new Stage(StageStyle.UNDECORATED);
+						display.setX(e.getX());
+						display.show();
+					}
+	 			});
 					
 			//Presenting
 				devStage.setScene(mainScene);

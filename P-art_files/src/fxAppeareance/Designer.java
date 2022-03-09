@@ -1,5 +1,4 @@
 package fxAppeareance;
-
 /*
  * Peter Gauld
  * Java FX Designer - A class meant to contain functions for helping to design FX components.
@@ -9,9 +8,11 @@ package fxAppeareance;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
 public class Designer {
 	//Background Methods.
 		public static Background getBackground(int red, int green, int blue) {
@@ -26,6 +27,11 @@ public class Designer {
 			return new Background(new BackgroundFill[] {new BackgroundFill(color, null, null)});
 		}
 	
+	//Border Methods
+		public static Border getBorder(Color color) {
+			return new Border(new BorderStroke[] {new BorderStroke(color, BorderStrokeStyle.SOLID, null, null)});
+		}
+		
 	//Color Methods.
 		public static Color getColor(int red, int green, int blue) {
 			return Color.rgb(red, green, blue);

@@ -14,9 +14,12 @@ import fxObjects.DockerColor;
 import fxObjects.DockerLayer;
 import fxObjects.DockerTimeline;
 import fxObjects.PCanvas;
+import fxObjects.Tool;
+import fxObjects.ToolButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -75,6 +78,11 @@ public class DrawingScreen extends Scene{
 				//Components for Main Pane
 					Pane toolPane = new Pane();
 					Pane canvasPane = new Pane();
+					
+					//Components for Tool Pane
+						VBox column1 = new VBox(new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
+						VBox column2 = new VBox(new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
+						HBox columns = new HBox(column1, column2);
 			
 		//Instantiating Event Components
 			DockerBrush brush = new DockerBrush(drawingScreen);
@@ -88,7 +96,12 @@ public class DrawingScreen extends Scene{
 						
 				//Main Pane
 					mainPane.getChildren().add(new HBox(toolPane, canvasPane));
-			
+					
+					//Tool Pane
+						toolPane.getChildren().add(columns);
+						//Button b1 = new Button();
+						//toolPane.getChildren().add(b1);
+					
 					//Canvas Pane
 						canvasPane.getChildren().add(canvas);
 						canvas.setParentPane(canvasPane);
@@ -120,6 +133,23 @@ public class DrawingScreen extends Scene{
 						toolPane.setBackground(Designer.getBackground(toolPaneColor));
 						toolPane.prefWidthProperty().bind(mainPane.widthProperty().divide(4));
 						toolPane.prefHeightProperty().bind(mainPane.heightProperty());
+						
+						//Columns
+							for(int i = 0 ; i < columns.getChildren().size() ; i++) {
+								VBox column = (VBox)columns.getChildren().get(i);
+								for(int j = 0 ; j < column.getChildren().size() ; j++) {
+									Button iButton = (Button)column.getChildren().get(j);
+									iButton.prefWidthProperty().bind(toolPane.widthProperty().divide(columns.getChildren().size()));
+									iButton.prefHeightProperty().bind(toolPane.heightProperty().divide(column.getChildren().size()));
+									iButton.setBackground(Designer.getBackground(60, 60, 60));
+									iButton.setBorder(Designer.getBorder(Designer.getColor(100, 100, 100)));
+									iButton.setOnAction(new EventHandler<ActionEvent>() {
+										public void handle(ActionEvent e) {
+											iButton.setTextFill(Color.rgb(200, 200, 200));
+										}		
+									});
+								}
+							}
 									
 					//Canvas Pane
 						canvasPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(3).divide(4));
@@ -169,5 +199,9 @@ public class DrawingScreen extends Scene{
 	
 	public PCanvas getCanvas() {
 		return canvas;
+	}
+	
+	public String getToolName() {
+		return new Tool().getName();
 	}
 }
