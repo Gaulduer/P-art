@@ -7,6 +7,8 @@ package fxObjects;
  * 3/9/2022 - File created.
  */
 
-public class ToolCursor {
-	
+public class ToolCursor extends Tool{
+	public ToolCursor() {
+		toolName = "Cursor";
+	}
 }

@@ -11,7 +11,7 @@ public class ToolBrush extends Tool{
 	
 	//Constructors
 		public ToolBrush() {
-			
+			toolName = "Brush";
 		}
 		
 		public ToolBrush(Brush brush) {

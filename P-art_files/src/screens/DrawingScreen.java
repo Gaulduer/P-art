@@ -6,31 +6,40 @@ package screens;
  * 
  * 2/25/2022 - File Created.
  * 3/2/2022 - Drawing scene is now a functional class instead of a method in P-art.
+ * 3/23/2022 - Basic save file implemented. Basic open file implemented.
  */
 
+
+import java.io.File;
+import javax.imageio.ImageIO;
 import fxAppeareance.Designer;
 import fxObjects.DockerBrush;
 import fxObjects.DockerColor;
 import fxObjects.DockerLayer;
 import fxObjects.DockerTimeline;
 import fxObjects.PCanvas;
+import fxObjects.PaneTool;
 import fxObjects.Tool;
-import fxObjects.ToolButton;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class DrawingScreen extends Scene{
 	private PCanvas canvas = new PCanvas();
 	private DrawingScreen drawingScreen = this;
+	private Tool selectedTool = new Tool();
 	
 	public DrawingScreen() {
 		super(new Pane());
@@ -76,13 +85,15 @@ public class DrawingScreen extends Scene{
 						Menu[] topBarMenus = {fileMenu, canvasMenu, dockerMenu, helpMenu};
 				Pane mainPane = new Pane();
 				//Components for Main Pane
-					Pane toolPane = new Pane();
+					//Pane toolPane = new Pane();
+					PaneTool toolPane = new PaneTool();
 					Pane canvasPane = new Pane();
 					
 					//Components for Tool Pane
-						VBox column1 = new VBox(new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
-						VBox column2 = new VBox(new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
-						HBox columns = new HBox(column1, column2);
+					    //column1 = new VBox(new ToolButton(new ToolCursor()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
+						//VBox column2 = new VBox(new ToolButton(new ToolBrush()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
+						//HBox columns = new HBox(column1, column2);
+				
 			
 		//Instantiating Event Components
 			DockerBrush brush = new DockerBrush(drawingScreen);
@@ -98,7 +109,7 @@ public class DrawingScreen extends Scene{
 					mainPane.getChildren().add(new HBox(toolPane, canvasPane));
 					
 					//Tool Pane
-						toolPane.getChildren().add(columns);
+						//toolPane.getChildren().add(columns);
 						//Button b1 = new Button();
 						//toolPane.getChildren().add(b1);
 					
@@ -135,6 +146,7 @@ public class DrawingScreen extends Scene{
 						toolPane.prefHeightProperty().bind(mainPane.heightProperty());
 						
 						//Columns
+						/*
 							for(int i = 0 ; i < columns.getChildren().size() ; i++) {
 								VBox column = (VBox)columns.getChildren().get(i);
 								for(int j = 0 ; j < column.getChildren().size() ; j++) {
@@ -142,14 +154,23 @@ public class DrawingScreen extends Scene{
 									iButton.prefWidthProperty().bind(toolPane.widthProperty().divide(columns.getChildren().size()));
 									iButton.prefHeightProperty().bind(toolPane.heightProperty().divide(column.getChildren().size()));
 									iButton.setBackground(Designer.getBackground(60, 60, 60));
+									iButton.setTextFill(Color.rgb(200, 200, 200));
 									iButton.setBorder(Designer.getBorder(Designer.getColor(100, 100, 100)));
 									iButton.setOnAction(new EventHandler<ActionEvent>() {
 										public void handle(ActionEvent e) {
-											iButton.setTextFill(Color.rgb(200, 200, 200));
+											for(int i = 0 ; i < columns.getChildren().size() ; i++) {
+												VBox column = (VBox)columns.getChildren().get(i);
+												for(int j = 0 ; j < column.getChildren().size() ; j++) {
+													Button iButton = (Button)column.getChildren().get(j);
+													iButton.setBackground(Designer.getBackground(60, 60, 60));
+												}
+											}
+											iButton.setBackground(Designer.getBackground(120, 120, 120));
 										}		
 									});
 								}
 							}
+						*/
 									
 					//Canvas Pane
 						canvasPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(3).divide(4));
@@ -165,6 +186,66 @@ public class DrawingScreen extends Scene{
 						helpMenu.setGraphic(Designer.getText("Help", menuTextColor));
 										
 					//Events	
+						//File Menu Items
+							fileOpen.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									FileChooser open = new FileChooser();
+									File read = open.showOpenDialog(drawingScreen.getWindow());		
+									Image print = null;
+										try {
+											print =  SwingFXUtils.toFXImage(ImageIO.read(read), null);
+										} catch (Exception ex) {
+											System.err.println(ex);
+										}
+										
+									canvas.getGraphicsContext2D().drawImage(print, 0, 0);
+								}
+							});
+						
+							fileSave.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									int imageWidth = (int)canvas.getWidth();
+									int imageHeight = (int)canvas.getHeight();
+									
+									FileChooser save = new FileChooser();
+									WritableImage image = new WritableImage(imageWidth, imageHeight);
+							
+									save.getExtensionFilters().add(new ExtensionFilter(".png", "*.png"));
+									save.setTitle("PETER'S WORK.png");
+									canvas.snapshot(null, image);
+									
+									try {
+										ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", save.showSaveDialog(drawingScreen.getWindow()));
+									}
+									catch(Exception ex) {
+										System.out.println("Error in File Save Event from the Drawing Screen Class");
+										System.err.println(ex);
+									}
+								}
+							});
+							
+							fileSaveAs.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {		
+									int imageWidth = (int)canvas.getWidth();
+									int imageHeight = (int)canvas.getHeight();
+									
+									FileChooser save = new FileChooser();
+									WritableImage image = new WritableImage(imageWidth, imageHeight);
+									
+									save.getExtensionFilters().add(new ExtensionFilter(".png", "*.png"));		
+									save.setTitle("PETER'S WORK.png");
+									canvas.snapshot(null, image);
+									
+									try {
+										ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", save.showSaveDialog(drawingScreen.getWindow()));
+									}
+									catch(Exception ex) {
+										System.out.println("Error in File Save As Event from the Drawing Screen Class");
+										System.err.println(ex);
+									}
+								}	
+							});
+						
 						//Docker Menu Items
 							dockerBrush.setOnAction(new EventHandler<ActionEvent>() {
 								public void handle(ActionEvent e) {
@@ -202,6 +283,6 @@ public class DrawingScreen extends Scene{
 	}
 	
 	public String getToolName() {
-		return new Tool().getName();
+		return selectedTool.getName();
 	}
 }
