@@ -11,9 +11,9 @@ import javafx.scene.layout.Pane;
 
 import screens.DrawingScreen;
 
-public class DockerLayer extends Docker{
+public class LayerDocker extends Docker{
 
-	public DockerLayer(DrawingScreen parentScene) {
+	public LayerDocker(DrawingScreen parentScene) {
 		super(parentScene);
 	}
 

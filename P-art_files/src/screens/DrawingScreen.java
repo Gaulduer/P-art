@@ -13,12 +13,12 @@ package screens;
 import java.io.File;
 import javax.imageio.ImageIO;
 import fxAppeareance.Designer;
-import fxObjects.DockerBrush;
-import fxObjects.DockerColor;
-import fxObjects.DockerLayer;
-import fxObjects.DockerTimeline;
+import fxObjects.BrushDocker;
+import fxObjects.ColorDocker;
+import fxObjects.LayerDocker;
+import fxObjects.TimelineDocker;
 import fxObjects.PCanvas;
-import fxObjects.PaneTool;
+import fxObjects.ToolPane;
 import fxObjects.Tool;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -86,7 +86,7 @@ public class DrawingScreen extends Scene{
 				Pane mainPane = new Pane();
 				//Components for Main Pane
 					//Pane toolPane = new Pane();
-					PaneTool toolPane = new PaneTool();
+					ToolPane toolPane = new ToolPane();
 					Pane canvasPane = new Pane();
 					
 					//Components for Tool Pane
@@ -96,10 +96,10 @@ public class DrawingScreen extends Scene{
 				
 			
 		//Instantiating Event Components
-			DockerBrush brush = new DockerBrush(drawingScreen);
-			DockerColor color = new DockerColor(drawingScreen);
-			DockerLayer layer = new DockerLayer(drawingScreen);
-			DockerTimeline timeline = new DockerTimeline(drawingScreen);
+			BrushDocker brush = new BrushDocker(drawingScreen);
+			ColorDocker color = new ColorDocker(drawingScreen);
+			LayerDocker layer = new LayerDocker(drawingScreen);
+			TimelineDocker timeline = new TimelineDocker(drawingScreen);
 				
 		//Adding to 
 			//Drawing Pane.

@@ -11,9 +11,9 @@ import javafx.scene.layout.Pane;
 
 import screens.DrawingScreen;
 
-public class DockerTimeline extends Docker{
+public class TimelineDocker extends Docker{
 
-	public DockerTimeline(DrawingScreen parentScene) {
+	public TimelineDocker(DrawingScreen parentScene) {
 		super(parentScene);
 	}
 

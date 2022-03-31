@@ -48,9 +48,8 @@ public class PArt extends Application {
 							if(e.getCode() == KeyCode.BACK_QUOTE)
 								if(devStage.isOpen() == false)
 									devStage.open();
-							if(e.getCode() == KeyCode.C) {
+							if(e.getCode() == KeyCode.C)
 								draw.clearCanvas();
-							}
 						}
 					});
 					

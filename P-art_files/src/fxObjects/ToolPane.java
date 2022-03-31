@@ -12,8 +12,8 @@ import javafx.scene.layout.VBox;
  * 3/9/2022 - File created.
  */
 
-public class PaneTool extends Pane {
-	public PaneTool() {
+public class ToolPane extends Pane {
+	public ToolPane() {
 		this.setBackground(Designer.getBackground(0, 0, 0));
 		this.getChildren().add(new VBox(new HBox()));
 		

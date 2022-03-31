@@ -17,8 +17,8 @@ import javafx.scene.layout.Pane;
 
 import screens.DrawingScreen;
 
-public class DockerBrush extends Docker {
-	public DockerBrush(DrawingScreen parentScene) {
+public class BrushDocker extends Docker {
+	public BrushDocker(DrawingScreen parentScene) {
 		super(parentScene);
 		surrogateStage.setTitle("Brush Docker");
 	}
