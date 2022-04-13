@@ -1,4 +1,4 @@
-package fxObjects;
+package pBrushes;
 
 /*
  * Peter Gauld
@@ -13,7 +13,7 @@ package fxObjects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 
-public abstract class Brush extends Tool {
+public abstract class Brush {
 	public abstract void startStroke(MouseEvent e, GraphicsContext g);
 	public abstract void continueStroke(MouseEvent e, GraphicsContext g);
 }

@@ -1,11 +1,12 @@
-package fxObjects;
-
 /*
  * Peter Gauld
  * Canvas Object - A canvas object that can be drawn on.
  * 
  * 2/25/2022 - File Created.
  */
+
+
+package pGeneral;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,15 +15,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import pTools.Tool;
 
 public class PCanvas extends Canvas {
 	//Attributes
 		private Boolean mousePresent = false;
 		private Boolean mousePressed = false;
-		private ToolBrush brush = new ToolBrush(new BrushStroke(), this.getGraphicsContext2D());
 		private Pane parentPane = new Pane();
+		private Tool tool;
 		
-	public PCanvas() {					
+	public PCanvas() {	
+		//Attributes
+			
+		
 		//Appearance
 			//Canvas
 				
@@ -56,13 +61,13 @@ public class PCanvas extends Canvas {
 				//Tool Events
 					this.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 						public void handle(MouseEvent e) {
-							brush.startStroke(e);
+							tool.startTool(e);
 						}
 					});			
 					
 					this.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 						public void handle(MouseEvent e) {
-							brush.continueStroke(e);
+							tool.continueTool(e);
 						}
 					});		
 	}
@@ -75,12 +80,12 @@ public class PCanvas extends Canvas {
 		return mousePressed;
 	}
 	
-	public void setToolBrush(ToolBrush brush) {
-		this.brush = brush;
+	public void setTool(Tool tool) {
+		this.tool = tool;
 	}
 	
-	public ToolBrush getToolBrush() {
-		return brush;
+	public Tool getTool() {
+		return tool;
 	}
 	
 	//Graphics Methods

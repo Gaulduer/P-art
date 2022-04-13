@@ -1,39 +1,25 @@
-package fxObjects;
 
-import javafx.scene.canvas.GraphicsContext;
+/*
+ * Peter Gauld
+ * Name
+ * 
+ * 4/6/2022 - Started log.
+ */
+
+package pTools;
+
 import javafx.scene.input.MouseEvent;
+import pBrushes.Brush;
+import pBrushes.BrushStroke;
 
 public class ToolBrush extends Tool{
 	//Attributes
 		private int strokeWidth;
 		private Brush brush = new BrushStroke();
-		private GraphicsContext g;
-	
+		
 	//Constructors
 		public ToolBrush() {
 			toolName = "Brush";
-		}
-		
-		public ToolBrush(Brush brush) {
-			setBrush(brush);
-		}
-		
-		public ToolBrush(GraphicsContext g) {
-			setGraphics(g);
-		}
-			
-		public ToolBrush(Brush brush, GraphicsContext g) {
-			setBrush(brush);
-			setGraphics(g);
-		}
-	
-	//Graphics Methods	
-		public void setGraphics(GraphicsContext g) {
-			this.g = g;
-		}
-		
-		public GraphicsContext getGraphics() {
-			return g;
 		}
 	
 	//Brush Methods
@@ -43,10 +29,6 @@ public class ToolBrush extends Tool{
 		
 		public Brush getBrush() {
 			return brush;
-		}
-		
-		public void startStroke(MouseEvent e) {
-			this.getBrush().startStroke(e, g);
 		}
 		
 		public void continueStroke(MouseEvent e) {
@@ -60,4 +42,17 @@ public class ToolBrush extends Tool{
 		public int getStrokeWidth() {
 			return strokeWidth;
 		}
-}
+
+		//Tool Methods
+			public void startTool(MouseEvent e) {
+				this.getBrush().startStroke(e, g);
+			}
+	
+			public void continueTool(MouseEvent e) {
+				this.getBrush().continueStroke(e, g);
+			}
+	
+			public void cancelTool() {
+
+			}
+	}

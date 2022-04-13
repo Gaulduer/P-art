@@ -9,17 +9,9 @@ package screens;
  * 3/23/2022 - Basic save file implemented. Basic open file implemented.
  */
 
-
 import java.io.File;
 import javax.imageio.ImageIO;
 import fxAppeareance.Designer;
-import fxObjects.BrushDocker;
-import fxObjects.ColorDocker;
-import fxObjects.LayerDocker;
-import fxObjects.TimelineDocker;
-import fxObjects.PCanvas;
-import fxObjects.ToolPane;
-import fxObjects.Tool;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,11 +27,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import pBrushes.BrushDocker;
+import pColor.ColorDocker;
+import pGeneral.PCanvas;
+import pLayers.LayerDocker;
+import pTimeline.TimelineDocker;
+import pTools.ToolDocker;
 
 public class DrawingScreen extends Scene{
-	private PCanvas canvas = new PCanvas();
 	private DrawingScreen drawingScreen = this;
-	private Tool selectedTool = new Tool();
+	private PCanvas canvas = new PCanvas();
+	private ToolDocker tool = new ToolDocker(this);
 	
 	public DrawingScreen() {
 		super(new Pane());
@@ -48,7 +46,8 @@ public class DrawingScreen extends Scene{
 	
 	private Pane drawingPane() {	
 		//Control Variables
-			Color toolPaneColor = Color.rgb(20, 20, 20);
+			Color toolPaneColor = Color.rgb(50, 50, 50);
+			Color toolTextColor = Color.rgb(200, 200, 200);
 			Color topBarColor = Color.rgb(50, 50, 50);
 			Color menuTextColor = Color.rgb(255, 255, 255);
 			
@@ -85,8 +84,6 @@ public class DrawingScreen extends Scene{
 						Menu[] topBarMenus = {fileMenu, canvasMenu, dockerMenu, helpMenu};
 				Pane mainPane = new Pane();
 				//Components for Main Pane
-					//Pane toolPane = new Pane();
-					ToolPane toolPane = new ToolPane();
 					Pane canvasPane = new Pane();
 					
 					//Components for Tool Pane
@@ -94,7 +91,7 @@ public class DrawingScreen extends Scene{
 						//VBox column2 = new VBox(new ToolButton(new ToolBrush()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
 						//HBox columns = new HBox(column1, column2);
 				
-			
+		
 		//Instantiating Event Components
 			BrushDocker brush = new BrushDocker(drawingScreen);
 			ColorDocker color = new ColorDocker(drawingScreen);
@@ -106,7 +103,7 @@ public class DrawingScreen extends Scene{
 				drawingPane.getChildren().add(new VBox(topBar, mainPane));
 						
 				//Main Pane
-					mainPane.getChildren().add(new HBox(toolPane, canvasPane));
+					mainPane.getChildren().add(new HBox(tool.dock(), canvasPane));
 					
 					//Tool Pane
 						//toolPane.getChildren().add(columns);
@@ -134,6 +131,9 @@ public class DrawingScreen extends Scene{
 						helpMenu.getItems().addAll(helpMenuItems);
 								
 			//Setting 
+				//Attributes	
+					this.getCanvas().setTool(tool.getSelectedTool()); //TODO maybe this could be done when selectedTool is set.
+					
 				//Appearance
 					//Main Pane
 						mainPane.setPrefSize(800, 600);
@@ -141,9 +141,10 @@ public class DrawingScreen extends Scene{
 						mainPane.minHeightProperty().bind(drawingPane.heightProperty());								
 										
 					//Tool Pane
-						toolPane.setBackground(Designer.getBackground(toolPaneColor));
-						toolPane.prefWidthProperty().bind(mainPane.widthProperty().divide(4));
-						toolPane.prefHeightProperty().bind(mainPane.heightProperty());
+						tool.setPrimaryColor(toolPaneColor);
+						tool.setSecondaryColor(toolTextColor);
+						tool.dock().prefWidthProperty().bind(mainPane.widthProperty().divide(4));
+						tool.dock().prefHeightProperty().bind(mainPane.heightProperty());
 						
 						//Columns
 						/*
@@ -282,7 +283,11 @@ public class DrawingScreen extends Scene{
 		return canvas;
 	}
 	
+	public ToolDocker getTools() {
+		return tool;
+	}
+	
 	public String getToolName() {
-		return selectedTool.getName();
+		return tool.getSelectedTool().getName();
 	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
 public class Designer {
 	//Background Methods.
 		public static Background getBackground(int red, int green, int blue) {
@@ -29,6 +30,10 @@ public class Designer {
 	
 	//Border Methods
 		public static Border getBorder(Color color) {
+			return new Border(new BorderStroke[] {new BorderStroke(color, BorderStrokeStyle.SOLID, null, null)});
+		}
+		
+		public static Border getBorder(int horizontalWidth, int verticalWidth, Color color) {
 			return new Border(new BorderStroke[] {new BorderStroke(color, BorderStrokeStyle.SOLID, null, null)});
 		}
 		

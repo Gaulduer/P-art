@@ -1,4 +1,4 @@
-package fxObjects;
+package pBrushes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;

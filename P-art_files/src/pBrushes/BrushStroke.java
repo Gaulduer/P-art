@@ -1,4 +1,4 @@
-package fxObjects;
+package pBrushes;
 
 /*
  * Peter Gauld
@@ -16,7 +16,7 @@ public class BrushStroke extends Brush{
 		private double lastY = 0;
 		//private double midX = 0;
 		//private double midY = 0;
-	
+		
 	public void startStroke(MouseEvent e, GraphicsContext g) {
 		lastX = e.getX();
 		lastY = e.getY();

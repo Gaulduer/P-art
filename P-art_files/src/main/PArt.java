@@ -8,6 +8,7 @@ package main;
  * 2/13/2022 - File Created. 
  * 2/14/2022 - UI window added. Menu Bar, Menus, and Menu Items added. Tool and Canvas Panes added.
  * 2/15/2022 - Development Window Added. Mouse click and entry/exit listeners added.
+ * 3/23/2022 - Basic save file implemented. Basic open file implemented.
  */
 
 import fxFiles.FxResourceHandler;
@@ -40,7 +41,7 @@ public class PArt extends Application {
 				
 			//Adding
 				mainStage.setScene(draw);
-				
+			
 			//Setting Events
 				//Main Stage
 					mainStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {

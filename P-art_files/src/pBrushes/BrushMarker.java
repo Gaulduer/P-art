@@ -1,4 +1,4 @@
-package fxObjects;
+package pBrushes;
 
 /*
  * Peter Gauld
@@ -11,10 +11,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 
 public class BrushMarker extends Brush {
-	private int lineWidth;
 	private double lastX;
 	private double lastY;
-
+	
 	public void startStroke(MouseEvent e, GraphicsContext g) {
 		lastX = e.getX();
 		lastY = e.getY();
@@ -22,7 +21,6 @@ public class BrushMarker extends Brush {
 	}
 
 	public void continueStroke(MouseEvent e, GraphicsContext g) {
-		g.setLineWidth(lineWidth);
 		g.strokeLine(lastX, lastY, e.getX(), e.getY());
 		lastX = e.getX();
 		lastY = e.getY();
