@@ -53,9 +53,10 @@ public class DevelopmentStage extends Stage{
 			//Appearance
 				//Development Stage
 					devStage.setTitle("Development Window");
+					devStage.setAlwaysOnTop(true);
 			
 	 			//Tracker
-					tracker.setPrefSize(300, 50);
+					tracker.setPrefSize(300, 100);
 	 				tracker.setEditable(false);
 	 				
 			//Events

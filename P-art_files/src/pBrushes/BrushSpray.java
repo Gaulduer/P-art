@@ -9,7 +9,6 @@ package pBrushes;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
 
 public class BrushSpray extends Brush{
 	int circlesPerTick = 100;

@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 /*
  * Peter Gauld
  * 4/6/2022 - Started log. 
+ * 4/20/2022 - Added basic functionality.
  */
 
 public class ToolBucket extends Tool{
@@ -12,10 +13,11 @@ public class ToolBucket extends Tool{
 		toolName = "Bucket";
 	}
 
-	@Override
 	public void startTool(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int canvasWidth = (int)g.getCanvas().getWidth();
+		int canvasHeight = (int)g.getCanvas().getHeight();
 		
+		g.fillRect(0, 0, canvasWidth, canvasHeight);
 	}
 
 	@Override

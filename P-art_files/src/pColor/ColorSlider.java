@@ -24,4 +24,8 @@ public class ColorSlider extends Slider{
 			}
 		});
 	}
+	
+	public int getInt() {
+		return (int)this.getValue();
+	}
 }

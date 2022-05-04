@@ -7,6 +7,7 @@
 
 package pBrushes;
 
+import fxAppeareance.Designer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -42,7 +43,7 @@ public class BrushDocker extends GeneralDocker {
 			//Setting
 				//Appearance
 					//Main Pane
-						mainPane.setPrefSize(400, 300);
+						mainPane.setBackground(Designer.getBackground(150, 150, 150));
 						
 				//Events
 					//Brush Combo Box

@@ -233,8 +233,9 @@ public class DrawingScreen extends Scene{
 									FileChooser save = new FileChooser();
 									WritableImage image = new WritableImage(imageWidth, imageHeight);
 									
-									save.getExtensionFilters().add(new ExtensionFilter(".png", "*.png"));		
-									save.setTitle("PETER'S WORK.png");
+									save.getExtensionFilters().add(0, new ExtensionFilter(".png", "*.png"));
+									save.getExtensionFilters().add(1, new ExtensionFilter(".jpg", "*.jpg"));	
+									save.getExtensionFilters().add(2, new ExtensionFilter(".ico", "*.ico"));	
 									canvas.snapshot(null, image);
 									
 									try {

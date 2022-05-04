@@ -7,6 +7,7 @@
 
 package pColor;
 
+import fxAppeareance.Designer;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -41,7 +42,7 @@ public class ColorDocker extends GeneralDocker {
 			//Setting
 				//Appearance
 					//Main Pane
-						mainPane.setPrefSize(600, 300);		
+						mainPane.setBackground(Designer.getBackground(0, 0, 0));
 				
 				//Events
 					//Color Sliders
@@ -50,7 +51,8 @@ public class ColorDocker extends GeneralDocker {
 								rEntry.setText(rSlider.getValue() + "");
 								gEntry.setText(gSlider.getValue() + "");
 								bEntry.setText(bSlider.getValue() + "");
-								setColor(rEntry, gEntry, bEntry);
+								setColor(rSlider, gSlider, bSlider);
+								mainPane.setBackground(Designer.getBackground(rSlider.getInt(), gSlider.getInt(), bSlider.getInt()));
 							}
 						};
 						
@@ -120,13 +122,32 @@ public class ColorDocker extends GeneralDocker {
 			//Do nothing.
 		}
 		
+		submitColor(r, g, b);
+	}
+	
+	private void setColor(ColorSlider rSlider, ColorSlider gSlider, ColorSlider bSlider) {
+		int r = rSlider.getInt();
+		int g = gSlider.getInt();
+		int b = bSlider.getInt();
+			
+		submitColor(r, g, b);
+	}
+	
+	private void submitColor(int r, int g, int b) {
 		if(r > 255)
 			r = 255;
+		else if(r < 0)
+			r = 0;
 		if(g > 255)
 			g = 255;
-		if(b > 255)
+		else if(g < 0)
+			g = 0;
+		if(b > 255 || b < 0)
 			b = 255;
-			
+		else if(b < 0)
+			b = 0;
+		
+		mainPane.setBackground(Designer.getBackground(r, g, b));
 		parentScene.getCanvas().setStrokeColor(Color.rgb(r, g, b));
 	}
 }

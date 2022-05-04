@@ -10,7 +10,6 @@
 package pTools;
 
 import fxAppeareance.Designer;
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +20,6 @@ import javafx.scene.paint.Color;
 import pBrushes.Brush;
 import pGeneral.GeneralDocker;
 import pProperties.ColorProperty;
-import pProperties.NumberProperty;
 import screens.DrawingScreen;
 
 public class ToolDocker extends GeneralDocker {
@@ -125,6 +123,7 @@ public class ToolDocker extends GeneralDocker {
 								tool.setSelected(true);
 								syncAppearance(tool);
 							}
+							parentScene.getCanvas().setTool(selected.getTool());
 						}
 					});
 		
