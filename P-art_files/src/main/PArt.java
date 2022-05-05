@@ -9,6 +9,7 @@ package main;
  * 2/14/2022 - UI window added. Menu Bar, Menus, and Menu Items added. Tool and Canvas Panes added.
  * 2/15/2022 - Development Window Added. Mouse click and entry/exit listeners added.
  * 3/23/2022 - Basic save file implemented. Basic open file implemented.
+ * 5/4/2022 - Instead of exiting everything with a System.exit(0) line, I made a way for all dockers to be closed. This is so that when new windows of P-art are open, all of them wont be closed by one closing.
  */
 
 import fxFiles.FxResourceHandler;
@@ -64,7 +65,7 @@ public class PArt extends Application {
 					
 					mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 						public void handle(WindowEvent e) {
-							System.exit(0);
+							draw.closeAllDockers();
 						}
 					});
 			

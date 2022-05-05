@@ -35,7 +35,6 @@ public class DevelopmentStage extends Stage{
 		
 		//Instantiating Components 
 			Stage devStage = new Stage();
-			//Scene mainScene = new Scene(new Pane(tracker));
 			Pane testingPane = new Pane();
 			Scene mainScene = new Scene(new VBox(tracker, testingPane));
 			

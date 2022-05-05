@@ -95,4 +95,8 @@ public abstract class GeneralDocker extends Scene {
 	public ColorProperty secondaryColorProperty(){
 		return secondaryColorProperty;
 	}
+	
+	public void close() {
+		surrogateStage.close();
+	}
 }

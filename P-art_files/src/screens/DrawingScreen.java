@@ -27,8 +27,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import main.PArt;
 import pBrushes.BrushDocker;
 import pColor.ColorDocker;
+import pGeneral.GeneralDocker;
+import pGeneral.HelpDocker;
 import pGeneral.PCanvas;
 import pLayers.LayerDocker;
 import pTimeline.TimelineDocker;
@@ -38,6 +42,7 @@ public class DrawingScreen extends Scene{
 	private DrawingScreen drawingScreen = this;
 	private PCanvas canvas = new PCanvas();
 	private ToolDocker tool = new ToolDocker(this);
+	private GeneralDocker[] dockers = new GeneralDocker[0];
 	
 	public DrawingScreen() {
 		super(new Pane());
@@ -77,26 +82,25 @@ public class DrawingScreen extends Scene{
 						MenuItem[] dockerMenuItems = {dockerBrush, dockerColor, dockerLayer, dockerTimeline};
 					Menu helpMenu = new Menu();
 					//Help Menu Items
+						MenuItem helpPArt = new MenuItem("P-art?");
 						MenuItem helpTools = new MenuItem("Tools?");
 						MenuItem helpCanvas = new MenuItem("Canvas?");
 						MenuItem helpDockers = new MenuItem("Dockers?");
-						MenuItem[] helpMenuItems = {helpTools, helpCanvas, helpDockers};
-						Menu[] topBarMenus = {fileMenu, canvasMenu, dockerMenu, helpMenu};
+						MenuItem[] helpMenuItems = {helpPArt, helpTools, helpCanvas, helpDockers};
+					Menu[] topBarMenus = {fileMenu, canvasMenu, dockerMenu, helpMenu};
 				Pane mainPane = new Pane();
 				//Components for Main Pane
 					Pane canvasPane = new Pane();
-					
-					//Components for Tool Pane
-					    //column1 = new VBox(new ToolButton(new ToolCursor()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
-						//VBox column2 = new VBox(new ToolButton(new ToolBrush()), new ToolButton(new Tool()), new ToolButton(new Tool()), new ToolButton(new Tool()));
-						//HBox columns = new HBox(column1, column2);
-				
 		
 		//Instantiating Event Components
 			BrushDocker brush = new BrushDocker(drawingScreen);
 			ColorDocker color = new ColorDocker(drawingScreen);
 			LayerDocker layer = new LayerDocker(drawingScreen);
 			TimelineDocker timeline = new TimelineDocker(drawingScreen);
+			HelpDocker help = new HelpDocker(drawingScreen);
+			
+		//Creating Docker Array (Really just for when all the dockers need to be closed.)
+			dockers = new GeneralDocker[] {brush, color, layer, timeline, tool};
 				
 		//Adding to 
 			//Drawing Pane.
@@ -145,33 +149,6 @@ public class DrawingScreen extends Scene{
 						tool.setSecondaryColor(toolTextColor);
 						tool.dock().prefWidthProperty().bind(mainPane.widthProperty().divide(4));
 						tool.dock().prefHeightProperty().bind(mainPane.heightProperty());
-						
-						//Columns
-						/*
-							for(int i = 0 ; i < columns.getChildren().size() ; i++) {
-								VBox column = (VBox)columns.getChildren().get(i);
-								for(int j = 0 ; j < column.getChildren().size() ; j++) {
-									Button iButton = (Button)column.getChildren().get(j);
-									iButton.prefWidthProperty().bind(toolPane.widthProperty().divide(columns.getChildren().size()));
-									iButton.prefHeightProperty().bind(toolPane.heightProperty().divide(column.getChildren().size()));
-									iButton.setBackground(Designer.getBackground(60, 60, 60));
-									iButton.setTextFill(Color.rgb(200, 200, 200));
-									iButton.setBorder(Designer.getBorder(Designer.getColor(100, 100, 100)));
-									iButton.setOnAction(new EventHandler<ActionEvent>() {
-										public void handle(ActionEvent e) {
-											for(int i = 0 ; i < columns.getChildren().size() ; i++) {
-												VBox column = (VBox)columns.getChildren().get(i);
-												for(int j = 0 ; j < column.getChildren().size() ; j++) {
-													Button iButton = (Button)column.getChildren().get(j);
-													iButton.setBackground(Designer.getBackground(60, 60, 60));
-												}
-											}
-											iButton.setBackground(Designer.getBackground(120, 120, 120));
-										}		
-									});
-								}
-							}
-						*/
 									
 					//Canvas Pane
 						canvasPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(3).divide(4));
@@ -188,6 +165,16 @@ public class DrawingScreen extends Scene{
 										
 					//Events	
 						//File Menu Items
+							fileNew.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									try {
+										new PArt().start(new Stage());
+									} catch (Exception ex) {
+										ex.printStackTrace();
+									}
+								}
+							});
+						
 							fileOpen.setOnAction(new EventHandler<ActionEvent>() {
 								public void handle(ActionEvent e) {
 									FileChooser open = new FileChooser();
@@ -272,6 +259,32 @@ public class DrawingScreen extends Scene{
 									timeline.openStage();
 								}
 							});
+							
+						//Help Menu Items
+							helpPArt.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									help.display("P-art is a digital art program made by Peter Gauld. You are able to create, edit, and save images you make! These images are made using a variety of tools available to you. If you have any questions about P-art, please contact Peter Gauld at:\ngaulduer@gmail.com\n\nThank you for drawing!");
+								}
+							});
+							
+							helpTools.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									help.display("Tools allow you to edit the canvas. Each tool has a different effect and a different use. Some tools currently do not function, and more will be available in a future release.");
+								}
+							});
+							
+							helpCanvas.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									help.display("The canvas is where you draw your image. What is on the canvas is what will be saved!");
+								}
+							});
+							
+							helpDockers.setOnAction(new EventHandler<ActionEvent>() {
+								public void handle(ActionEvent e) {
+									help.display("Dockers are windows that you can open to change features of the program. In a future release they will be able to merge with the main window.");
+								}
+							});
+							
 						
 		return drawingPane;
 	}	
@@ -290,5 +303,10 @@ public class DrawingScreen extends Scene{
 	
 	public String getToolName() {
 		return tool.getSelectedTool().getName();
+	}
+	
+	public void closeAllDockers() {
+		for(int i = 0 ; i < dockers.length ; i++)
+			dockers[i].close();
 	}
 }

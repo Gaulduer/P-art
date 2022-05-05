@@ -5,9 +5,10 @@
  * 3/2/2022 - File Created
  */
 
-
 package pTimeline;
 
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import pGeneral.GeneralDocker;
 import screens.DrawingScreen;
 
@@ -15,9 +16,17 @@ public class TimelineDocker extends GeneralDocker{
 
 	public TimelineDocker(DrawingScreen parentScene) {
 		super(parentScene);
+		surrogateStage.setTitle("Timeline Docker");
 	}
 
 	public void setMainPane() {
-		mainPane.setPrefSize(100, 100);
+		Text text = new Text("This Docker will be implemented in a future release.");
+		StackPane textHolder = new StackPane(text);
+		
+		//Adding
+			mainPane.getChildren().add(textHolder);
+		
+		//Appearance
+			mainPane.setPrefSize(400, 300);
 	}
 }

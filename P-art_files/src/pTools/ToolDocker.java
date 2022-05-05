@@ -39,9 +39,10 @@ public class ToolDocker extends GeneralDocker {
 			ToolButton brush = new ToolButton(new ToolBrush());
 			ToolButton eraser = new ToolButton(new ToolEraser());
 			ToolButton bucket = new ToolButton(new ToolBucket());
+			ToolButton line = new ToolButton(new ToolLine());
 			ToolButton curve = new ToolButton(new ToolCurve());
 			ToolButton polygon = new ToolButton(new ToolPolygon());
-			ToolButton[] toolButtons = {cursor, brush, eraser, bucket, curve, polygon};
+			ToolButton[] toolButtons = {cursor, brush, eraser, bucket, line, curve, polygon};
 		
 			addToolButtons(toolButtons);	
 			selected = brush;

@@ -6,8 +6,8 @@
  */
 
 package pLayers;
-
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import pGeneral.GeneralDocker;
 import screens.DrawingScreen;
 
@@ -15,11 +15,18 @@ public class LayerDocker extends GeneralDocker{
 
 	public LayerDocker(DrawingScreen parentScene) {
 		super(parentScene);
+		surrogateStage.setTitle("Layer Docker");
 	}
 
 	//Docker Methods
 		public void setMainPane() {
-			Pane mainPane = new Pane();
-			mainPane.setPrefSize(100, 100);
+			Text text = new Text("This Docker will be implemented in a future release.");
+			StackPane textHolder = new StackPane(text);
+			
+			//Adding
+				mainPane.getChildren().add(textHolder);
+			
+			//Appearance
+				mainPane.setPrefSize(400, 300);
 		}
 }

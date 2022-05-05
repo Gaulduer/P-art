@@ -3,6 +3,7 @@
  * Color Docker - A docker for the user to select and set tool colors. Docker can now change brush color.
  * 
  * 3/2/2022 - File Created
+ * 5/4/2022 - Important improvements made to color entry.
  */
 
 package pColor;
